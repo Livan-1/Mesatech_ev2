@@ -1,0 +1,8 @@
+# Credenciales reales: nunca al repositorio
+*.env
+!*.env.example
+.env
+target/
+node_modules/
+build/
+.idea/

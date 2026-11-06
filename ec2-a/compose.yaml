@@ -1,0 +1,27 @@
+# EC2 A: BFF + ms-catalogo (publicador)
+name: mesatech-a
+
+services:
+  ms-catalogo:
+    build: ./ms-catalogo
+    image: mesatech/ms-catalogo:ep2
+    container_name: ms-catalogo
+    restart: unless-stopped
+    env_file: catalogo.env
+    ports:
+      # Solo desde la propia EC2 (pruebas con curl). El BFF lo usa por la red interna de Docker.
+      - "127.0.0.1:8082:8082"
+    mem_limit: 700m
+
+  bff:
+    build: ./bff
+    image: mesatech/bff:ep2
+    container_name: bff
+    restart: unless-stopped
+    env_file: bff.env
+    ports:
+      # Lo llama API Gateway
+      - "8080:8080"
+    depends_on:
+      - ms-catalogo
+    mem_limit: 600m

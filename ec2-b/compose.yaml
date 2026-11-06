@@ -1,0 +1,14 @@
+# EC2 B: ms-solicitudes (consumidor)
+name: mesatech-b
+
+services:
+  ms-solicitudes:
+    build: ./ms-solicitudes
+    image: mesatech/ms-solicitudes:ep2
+    container_name: ms-solicitudes
+    restart: unless-stopped
+    env_file: solicitudes.env
+    ports:
+      # Lo llama el BFF desde EC2 A (security group: 8081 solo desde sg_ec2_a)
+      - "8081:8081"
+    mem_limit: 700m
