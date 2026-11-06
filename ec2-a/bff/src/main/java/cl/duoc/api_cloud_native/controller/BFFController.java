@@ -136,4 +136,15 @@ public class BFFController {
             return ResponseEntity.status(ex.getStatusCode()).body(ex.getResponseBodyAsString());
         }
     }
+
+        // 9. Version 2 del catalogo: agrega version y fecha de consulta (v1 se mantiene sin cambios)
+    @GetMapping("/v2/catalogo")
+    public ResponseEntity<?> obtenerCatalogoV2() {
+        try {
+            Object response = restTemplate.getForObject(CATALOG_URL + "/v2/catalogo", Object.class);
+            return ResponseEntity.ok(response);
+        } catch (HttpStatusCodeException ex) {
+            return ResponseEntity.status(ex.getStatusCode()).body(ex.getResponseBodyAsString());
+        }
+    }
 }
